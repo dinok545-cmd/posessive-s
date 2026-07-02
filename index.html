@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интерактивный тест по английскому</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: #f0f4f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            padding: 25px 30px;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #1a2b4c;
+            border-bottom: 3px solid #3b82f6;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .badge {
+            background: #3b82f6;
+            color: white;
+            font-size: 14px;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-weight: normal;
+        }
+        .task-desc {
+            background: #eef2ff;
+            padding: 12px 18px;
+            border-radius: 12px;
+            color: #1e3a8a;
+            margin: 15px 0;
+            border-left: 5px solid #3b82f6;
+        }
+        .sentence-block {
+            background: #f8fafc;
+            padding: 15px 20px;
+            border-radius: 16px;
+            margin-bottom: 18px;
+            border: 1px solid #e2e8f0;
+            transition: 0.2s;
+        }
+        .sentence-block:hover {
+            border-color: #94a3b8;
+        }
+        .russian {
+            font-size: 18px;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 10px;
+        }
+        .word-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 12px 0 8px 0;
+            background: #f1f5f9;
+            padding: 12px;
+            border-radius: 12px;
+            min-height: 54px;
+        }
+        .word-btn {
+            background: white;
+            border: 2px solid #cbd5e1;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.15s;
+            font-weight: 500;
+            color: #1e293b;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .word-btn:hover:not(:disabled) {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+            transform: scale(1.02);
+        }
+        .word-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: scale(0.95);
+        }
+        .answer-zone {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px 5px;
+            min-height: 48px;
+            background: white;
+            padding: 8px 12px;
+            border-radius: 12px;
+            border: 2px dashed #94a3b8;
+            margin: 10px 0 5px 0;
+        }
+        .answer-zone span {
+            background: #dbeafe;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 18px;
+            font-weight: 500;
+            color: #1e3a8a;
+            border: 1px solid #93c5fd;
+            cursor: pointer;
+        }
+        .answer-zone span:hover {
+            background: #bfdbfe;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+        .btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #2563eb;
+        }
+        .btn-warning {
+            background: #f59e0b;
+            color: white;
+        }
+        .btn-warning:hover {
+            background: #d97706;
+        }
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #059669;
+        }
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 10px 0 5px 0;
+        }
+        .input-group input {
+            flex: 1;
+            min-width: 180px;
+            padding: 10px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 30px;
+            font-size: 16px;
+            transition: 0.2s;
+        }
+        .input-group input:focus {
+            border-color: #3b82f6;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+        }
+        .result-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .result-correct {
+            background: #dcfce7;
+            color: #15803d;
+        }
+        .result-wrong {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+        .stat {
+            background: #e2e8f0;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+        }
+        .flex-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px solid #e2e8f0;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 15px; }
+            .russian { font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🧩 Упражнение 1: Собери предложение <span class="badge">Порядок слов</span></h2>
+    <div class="task-desc">
+        📌 Нажимай на слова в правильном порядке, чтобы получился перевод русского предложения.
+        Если ошибся — нажми на слово в синей строке, чтобы убрать его.
+    </div>
+
+    <div id="builderContainer"></div>
+
+    <div class="flex-row">
+        <div>
+            <button class="btn btn-warning" onclick="resetBuilder()">🔄 Сбросить всё</button>
+            <button class="btn btn-success" onclick="checkBuilder()">✅ Проверить</button>
+        </div>
+        <div id="builderScore" class="stat">0 / 10</div>
+    </div>
+</div>
+
+<!-- ============================================= -->
+<div class="container">
+    <h2>✍️ Упражнение 2: Диктант (вставь слово) <span class="badge">Словарный запас</span></h2>
+    <div class="task-desc">
+        📌 Я диктую русское предложение, а ты печатаешь <strong>только пропущенное слово</strong> в английском варианте.
+    </div>
+
+    <div id="gapContainer"></div>
+
+    <div class="flex-row">
+        <div>
+            <button class="btn btn-warning" onclick="resetGap()">🔄 Сбросить</button>
+            <button class="btn btn-primary" onclick="checkGap()">✅ Проверить все</button>
+        </div>
+        <div id="gapScore" class="stat">0 / 10</div>
+    </div>
+</div>
+
+<script>
+    // --------------------------------------------------------------
+    // ДАННЫЕ: исходные предложения (русский + правильный английский)
+    // --------------------------------------------------------------
+    const SENTENCES = [
+        { ru: "Машина моей мамы красная.", en: "My mother's car is red." },
+        { ru: "Это дом моих родителей.", en: "This is my parents' house." },
+        { ru: "Телефон его брата сломан.", en: "His brother's phone is broken." },
+        { ru: "Комната её сестры чистая.", en: "Her sister's room is clean." },
+        { ru: "Книга нашей учительницы интересная.", en: "Our teacher's book is interesting." },
+        { ru: "Хвост собаки короткий.", en: "The dog's tail is short." },
+        { ru: "Имя моего друга — Алекс.", en: "My friend's name is Alex." },
+        { ru: "Игрушки детей на столе.", en: "The children's toys are on the table." },
+        { ru: "Сестра Тома — врач.", en: "Tom's sister is a doctor." },
+        { ru: "Квартира моих бабушки и дедушки большая.", en: "My grandparents' apartment is big." }
+    ];
+
+    // --------------------------------------------------------------
+    // УПРАЖНЕНИЕ 1: Собиралка (перемешанные слова)
+    // --------------------------------------------------------------
+    let builderState = [];
+
+    function shuffleArray(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    function initBuilder() {
+        builderState = SENTENCES.map((s) => {
+            const words = s.en.match(/[\w']+|[.,!?;:]/g) || [];
+            const shuffled = shuffleArray([...words]);
+            return {
+                correct: false,
+                userOrderIndices: [],
+                words: shuffled,
+                original: words,
+                ru: s.ru,
+                en: s.en
+            };
+        });
+        renderBuilder();
+        updateBuilderScore();
+    }
+
+    function renderBuilder() {
+        const container = document.getElementById('builderContainer');
+        container.innerHTML = '';
+        builderState.forEach((item, idx) => {
+            const block = document.createElement('div');
+            block.className = 'sentence-block';
+
+            // русский текст (без подсказки!)
+            const ruDiv = document.createElement('div');
+            ruDiv.className = 'russian';
+            ruDiv.textContent = `${idx+1}. ${item.ru}`;
+            block.appendChild(ruDiv);
+
+            // зона для выбранных слов (ответ)
+            const answerZone = document.createElement('div');
+            answerZone.className = 'answer-zone';
+            answerZone.id = `answerZone_${idx}`;
+            const userOrder = item.userOrderIndices.map(i => item.words[i]);
+            userOrder.forEach((word, wIdx) => {
+                const span = document.createElement('span');
+                span.textContent = word;
+                span.title = 'Нажми, чтобы убрать';
+                span.addEventListener('click', () => {
+                    removeWordFromBuilder(idx, wIdx);
+                });
+                answerZone.appendChild(span);
+            });
+            block.appendChild(answerZone);
+
+            // банк слов (кнопки)
+            const wordBank = document.createElement('div');
+            wordBank.className = 'word-bank';
+            wordBank.id = `wordBank_${idx}`;
+            item.words.forEach((word, wIdx) => {
+                const btn = document.createElement('button');
+                btn.className = 'word-btn';
+                if (item.userOrderIndices.includes(wIdx)) {
+                    btn.classList.add('used');
+                    btn.disabled = true;
+                }
+                btn.textContent = word;
+                btn.addEventListener('click', () => {
+                    addWordToBuilder(idx, wIdx);
+                });
+                wordBank.appendChild(btn);
+            });
+            block.appendChild(wordBank);
+
+            // статус
+            const statusDiv = document.createElement('div');
+            statusDiv.id = `status_${idx}`;
+            statusDiv.style.marginTop = '8px';
+            statusDiv.style.fontWeight = '500';
+            block.appendChild(statusDiv);
+
+            container.appendChild(block);
+        });
+    }
+
+    function addWordToBuilder(idx, wordIndex) {
+        const item = builderState[idx];
+        if (!item.userOrderIndices) {
+            item.userOrderIndices = [];
+        }
+        if (item.userOrderIndices.includes(wordIndex)) return;
+        item.userOrderIndices.push(wordIndex);
+        renderBuilder();
+        updateBuilderScore();
+    }
+
+    function removeWordFromBuilder(idx, position) {
+        const item = builderState[idx];
+        if (!item.userOrderIndices) return;
+        if (position >= 0 && position < item.userOrderIndices.length) {
+            item.userOrderIndices.splice(position, 1);
+            renderBuilder();
+            updateBuilderScore();
+        }
+    }
+
+    function checkBuilder() {
+        let correctCount = 0;
+        builderState.forEach((item, idx) => {
+            const original = item.original || [];
+            const user = item.userOrderIndices.map(i => item.words[i]) || [];
+            const isCorrect = JSON.stringify(user) === JSON.stringify(original);
+            item.correct = isCorrect;
+            if (isCorrect) correctCount++;
+
+            const statusDiv = document.getElementById(`status_${idx}`);
+            if (statusDiv) {
+                if (isCorrect) {
+                    statusDiv.innerHTML = `<span class="result-badge result-correct">✅ Верно!</span>`;
+                } else {
+                    statusDiv.innerHTML = `<span class="result-badge result-wrong">❌ Неверно. Правильно: "${item.en}"</span>`;
+                }
+            }
+        });
+        document.getElementById('builderScore').textContent = `${correctCount} / 10`;
+    }
+
+    function resetBuilder() {
+        initBuilder();
+        document.getElementById('builderScore').textContent = '0 / 10';
+    }
+
+    function updateBuilderScore() {
+        // просто показываем прогресс, сколько слов выбрано (не проверка)
+        let totalWords = 0;
+        builderState.forEach(item => {
+            totalWords += (item.userOrderIndices || []).length;
+        });
+        // не обновляем текст, чтобы не сбивать с толку
+    }
+
+    initBuilder();
+
+    // --------------------------------------------------------------
+    // УПРАЖНЕНИЕ 2: Диктант с пропущенным словом
+    // --------------------------------------------------------------
+    let gapState = [];
+
+    function getGapWord(enSentence) {
+        const words = enSentence.match(/[\w']+|[.,!?;:]/g) || [];
+        const stopWords = ['my', 'his', 'her', 'our', 'their', 'your', 'its', 'the', 'a', 'an', 'is', 'are', 'am', 'on', 'to', 'of', 'for', 'with'];
+        for (let word of words) {
+            const clean = word.replace(/[.,!?;:']/g, '');
+            if (clean.length > 2 && !stopWords.includes(clean.toLowerCase())) {
+                return clean;
+            }
+        }
+        return words[0] || 'word';
+    }
+
+    function initGap() {
+        gapState = SENTENCES.map((s) => {
+            const gapWord = getGapWord(s.en);
+            const parts = s.en.split(new RegExp(`\\b${gapWord}\\b`, 'i'));
+            const template = parts.join('_____');
+            return {
+                ru: s.ru,
+                en: s.en,
+                gapWord: gapWord,
+                template: template,
+                userAnswer: '',
+                checked: false,
+                correct: false
+            };
+        });
+        renderGap();
+        updateGapScore();
+    }
+
+    function renderGap() {
+        const container = document.getElementById('gapContainer');
+        container.innerHTML = '';
+        gapState.forEach((item, idx) => {
+            const block = document.createElement('div');
+            block.className = 'sentence-block';
+
+            const ruDiv = document.createElement('div');
+            ruDiv.className = 'russian';
+            ruDiv.textContent = `${idx+1}. ${item.ru}`;
+            block.appendChild(ruDiv);
+
+            const templateDiv = document.createElement('div');
+            templateDiv.style.fontSize = '18px';
+            templateDiv.style.fontWeight = '500';
+            templateDiv.style.color = '#1e293b';
+            templateDiv.style.background = '#f1f5f9';
+            templateDiv.style.padding = '8px 14px';
+            templateDiv.style.borderRadius = '10px';
+            templateDiv.style.marginBottom = '10px';
+            const parts = item.template.split('_____');
+            templateDiv.innerHTML = parts[0] + `<input type="text" id="gapInput_${idx}" placeholder="?" style="width:120px; padding:6px 12px; border:2px solid #cbd5e1; border-radius:20px; font-size:16px; text-align:center;">` + parts[1];
+            block.appendChild(templateDiv);
+
+            const checkBtn = document.createElement('button');
+            checkBtn.className = 'btn btn-primary';
+            checkBtn.textContent = 'Проверить';
+            checkBtn.style.marginRight = '10px';
+            checkBtn.addEventListener('click', () => checkSingleGap(idx));
+            block.appendChild(checkBtn);
+
+            const statusSpan = document.createElement('span');
+            statusSpan.id = `gapStatus_${idx}`;
+            block.appendChild(statusSpan);
+
+            container.appendChild(block);
+        });
+        gapState.forEach((item, idx) => {
+            const input = document.getElementById(`gapInput_${idx}`);
+            if (input) {
+                input.value = item.userAnswer || '';
+                input.addEventListener('input', (e) => {
+                    gapState[idx].userAnswer = e.target.value.trim();
+                });
+            }
+        });
+    }
+
+    function checkSingleGap(idx) {
+        const item = gapState[idx];
+        const input = document.getElementById(`gapInput_${idx}`);
+        if (!input) return;
+        const answer = input.value.trim();
+        item.userAnswer = answer;
+        const isCorrect = answer.toLowerCase() === item.gapWord.toLowerCase();
+        item.correct = isCorrect;
+        item.checked = true;
+
+        const status = document.getElementById(`gapStatus_${idx}`);
+        if (status) {
+            if (isCorrect) {
+                status.innerHTML = `<span class="result-badge result-correct">✅ Верно (${item.gapWord})</span>`;
+            } else {
+                status.innerHTML = `<span class="result-badge result-wrong">❌ Правильно: "${item.gapWord}"</span>`;
+            }
+        }
+        updateGapScore();
+    }
+
+    function checkGap() {
+        gapState.forEach((item, idx) => {
+            const input = document.getElementById(`gapInput_${idx}`);
+            if (input) {
+                item.userAnswer = input.value.trim();
+                const isCorrect = item.userAnswer.toLowerCase() === item.gapWord.toLowerCase();
+                item.correct = isCorrect;
+                item.checked = true;
+                const status = document.getElementById(`gapStatus_${idx}`);
+                if (status) {
+                    if (isCorrect) {
+                        status.innerHTML = `<span class="result-badge result-correct">✅ Верно</span>`;
+                    } else {
+                        status.innerHTML = `<span class="result-badge result-wrong">❌ Правильно: "${item.gapWord}"</span>`;
+                    }
+                }
+            }
+        });
+        updateGapScore();
+    }
+
+    function resetGap() {
+        gapState.forEach((item, idx) => {
+            item.userAnswer = '';
+            item.checked = false;
+            item.correct = false;
+            const input = document.getElementById(`gapInput_${idx}`);
+            if (input) input.value = '';
+            const status = document.getElementById(`gapStatus_${idx}`);
+            if (status) status.innerHTML = '';
+        });
+        updateGapScore();
+    }
+
+    function updateGapScore() {
+        let correct = 0;
+        gapState.forEach(item => {
+            if (item.checked && item.correct) correct++;
+        });
+        document.getElementById('gapScore').textContent = `${correct} / 10`;
+    }
+
+    initGap();
+
+    // глобальные функции для onclick
+    window.checkBuilder = checkBuilder;
+    window.resetBuilder = resetBuilder;
+    window.checkGap = checkGap;
+    window.resetGap = resetGap;
+    window.checkSingleGap = checkSingleGap;
+</script>
+
+</body>
+</html>
