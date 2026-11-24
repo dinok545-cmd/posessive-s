@@ -3,316 +3,411 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Интерактивный тест по английскому</title>
+    <title>Собери предложение ✨</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --pink: #ff8fc7;
+            --pink-deep: #ff5fa8;
+            --lilac: #b39dff;
+            --lilac-deep: #8e6bff;
+            --mint: #7be0c3;
+            --mint-deep: #34c9a0;
+            --peach: #ffb98a;
+            --sky: #8fd3ff;
+            --cream: #fff7fb;
+            --text: #4a3563;
+            --text-soft: #8a74a8;
+        }
+
         * {
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
+            font-family: 'Nunito', 'Segoe UI', Tahoma, sans-serif;
         }
+
         body {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            background:
+                radial-gradient(circle at 12% 18%, rgba(255, 182, 225, 0.85) 0, transparent 40%),
+                radial-gradient(circle at 88% 12%, rgba(190, 170, 255, 0.85) 0, transparent 42%),
+                radial-gradient(circle at 80% 90%, rgba(150, 220, 255, 0.8) 0, transparent 45%),
+                radial-gradient(circle at 10% 88%, rgba(255, 215, 180, 0.8) 0, transparent 42%),
+                #ffeaf6;
+            background-attachment: fixed;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             min-height: 100vh;
-            padding: 30px 20px;
-            margin: 0;
-        }
-        .container {
-            max-width: 950px;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.07);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            padding: 35px 40px;
-            border-radius: 40px;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            transition: 0.3s;
-        }
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px 16px;
-                border-radius: 24px;
-            }
+            padding: 36px 18px 60px;
+            color: var(--text);
+            overflow-x: hidden;
         }
 
+        /* ---------- плавающие декорации ---------- */
+        .floaty {
+            position: fixed;
+            font-size: 30px;
+            pointer-events: none;
+            opacity: 0.75;
+            z-index: 0;
+            animation: floatUp 9s ease-in-out infinite;
+            filter: drop-shadow(0 4px 6px rgba(180, 120, 200, 0.25));
+        }
+        .floaty:nth-of-type(1) { left: 4%;  top: 12%; animation-delay: 0s;   font-size: 34px; }
+        .floaty:nth-of-type(2) { left: 92%; top: 20%; animation-delay: 1.5s; }
+        .floaty:nth-of-type(3) { left: 8%;  top: 55%; animation-delay: 3s;   font-size: 26px; }
+        .floaty:nth-of-type(4) { left: 90%; top: 62%; animation-delay: 2s;   font-size: 36px; }
+        .floaty:nth-of-type(5) { left: 3%;  top: 82%; animation-delay: 4s; }
+        .floaty:nth-of-type(6) { left: 94%; top: 88%; animation-delay: 5s;   font-size: 24px; }
+        .floaty:nth-of-type(7) { left: 48%; top: 4%;  animation-delay: 2.5s; font-size: 22px; }
+
+        @keyframes floatUp {
+            0%, 100% { transform: translateY(0) rotate(-6deg); }
+            50%      { transform: translateY(-22px) rotate(8deg); }
+        }
+
+        /* ---------- главный контейнер ---------- */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            padding: 34px 38px 38px;
+            border-radius: 44px;
+            border: 3px solid rgba(255, 255, 255, 0.9);
+            box-shadow:
+                0 20px 60px rgba(176, 120, 220, 0.28),
+                0 0 0 8px rgba(255, 180, 225, 0.22);
+        }
+
+        /* ---------- заголовок ---------- */
         .header {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-            gap: 12px;
+            text-align: center;
+            margin-bottom: 22px;
         }
         h2 {
-            font-size: 28px;
+            font-family: 'Pacifico', cursive;
+            font-weight: 400;
+            font-size: 40px;
+            line-height: 1.2;
+            background: linear-gradient(90deg, var(--pink-deep), var(--lilac-deep));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: drop-shadow(0 3px 0 rgba(255, 255, 255, 0.9));
+        }
+        .badge {
+            display: inline-block;
+            margin-top: 10px;
+            background: linear-gradient(135deg, var(--pink), var(--lilac));
+            color: #fff;
             font-weight: 800;
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            letter-spacing: -0.5px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-        h2 span {
-            background: linear-gradient(135deg, #facc15, #f59e0b);
-            color: #0f172a;
             font-size: 14px;
-            font-weight: 700;
-            padding: 4px 18px;
+            padding: 6px 20px;
             border-radius: 40px;
-            letter-spacing: 0.3px;
-            text-shadow: none;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
-        }
-        .task-desc {
-            background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(10px);
-            padding: 14px 20px;
-            border-radius: 16px;
-            color: #cbd5e1;
-            font-size: 15px;
-            border-left: 4px solid #facc15;
-            margin-bottom: 28px;
-            line-height: 1.5;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-        .task-desc strong {
-            color: #facc15;
+            letter-spacing: 0.5px;
+            box-shadow: 0 6px 16px rgba(179, 157, 255, 0.45);
         }
 
-        .sentence-block {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            padding: 18px 22px 20px 22px;
-            border-radius: 20px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            transition: all 0.25s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        /* ---------- как играть ---------- */
+        .task-desc {
+            background: linear-gradient(135deg, #fff6c9, #ffe9f3);
+            padding: 16px 22px;
+            border-radius: 22px;
+            color: var(--text);
+            font-size: 15.5px;
+            line-height: 1.55;
+            margin-bottom: 28px;
+            border: 2px dashed rgba(255, 143, 199, 0.65);
+            box-shadow: 0 6px 18px rgba(255, 170, 210, 0.25);
+            transform: rotate(-0.6deg);
         }
+        .task-desc strong { color: var(--pink-deep); }
+
+        /* ---------- карточки предложений ---------- */
+        .sentence-block {
+            --accent: var(--pink);
+            --accent-soft: #ffe3f1;
+            background: #ffffff;
+            padding: 20px 24px 22px;
+            border-radius: 28px;
+            margin-bottom: 22px;
+            border: 3px solid var(--accent-soft);
+            box-shadow: 0 8px 22px rgba(160, 110, 200, 0.14);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            animation: popIn 0.5s ease backwards;
+        }
+        .sentence-block:nth-child(5n+2) { --accent: var(--lilac); --accent-soft: #ece5ff; }
+        .sentence-block:nth-child(5n+3) { --accent: var(--mint);  --accent-soft: #dcf8ef; }
+        .sentence-block:nth-child(5n+4) { --accent: var(--peach); --accent-soft: #ffeade; }
+        .sentence-block:nth-child(5n+5) { --accent: var(--sky);   --accent-soft: #def2ff; }
+
         .sentence-block:hover {
-            border-color: rgba(250, 204, 21, 0.25);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            border-color: var(--accent);
+            box-shadow: 0 14px 30px rgba(160, 110, 200, 0.22);
+        }
+
+        .sentence-block:nth-child(1)  { animation-delay: 0.00s; }
+        .sentence-block:nth-child(2)  { animation-delay: 0.06s; }
+        .sentence-block:nth-child(3)  { animation-delay: 0.12s; }
+        .sentence-block:nth-child(4)  { animation-delay: 0.18s; }
+        .sentence-block:nth-child(5)  { animation-delay: 0.24s; }
+        .sentence-block:nth-child(6)  { animation-delay: 0.30s; }
+        .sentence-block:nth-child(7)  { animation-delay: 0.36s; }
+        .sentence-block:nth-child(8)  { animation-delay: 0.42s; }
+        .sentence-block:nth-child(9)  { animation-delay: 0.48s; }
+        .sentence-block:nth-child(10) { animation-delay: 0.54s; }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: translateY(24px) scale(0.96); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .russian {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             font-size: 20px;
-            font-weight: 700;
-            color: #f8fafc;
-            margin-bottom: 12px;
-            letter-spacing: -0.2px;
-            text-shadow: 0 1px 8px rgba(0,0,0,0.2);
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 14px;
         }
         .russian .num {
-            color: #facc15;
-            margin-right: 8px;
+            flex-shrink: 0;
+            width: 36px;
+            height: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: var(--accent);
+            color: #fff;
+            font-size: 16px;
             font-weight: 800;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
         }
 
+        /* ---------- зона ответа ---------- */
         .answer-zone {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            gap: 8px 6px;
-            min-height: 56px;
-            background: rgba(255, 255, 255, 0.05);
+            gap: 8px;
+            min-height: 58px;
+            background: var(--cream);
             padding: 10px 16px;
-            border-radius: 16px;
-            border: 2px dashed rgba(255, 255, 255, 0.12);
-            margin: 8px 0 10px 0;
+            border-radius: 20px;
+            border: 3px dashed var(--accent);
+            margin-bottom: 12px;
             transition: 0.2s;
         }
         .answer-zone:empty::before {
-            content: '👆 Нажми на слова ниже, чтобы собрать предложение';
-            color: #64748b;
+            content: '💕 Нажми на слова ниже, чтобы собрать предложение';
+            color: var(--text-soft);
             font-size: 15px;
-            font-weight: 400;
-            opacity: 0.6;
+            font-weight: 600;
+            opacity: 0.7;
         }
         .answer-zone span {
-            background: linear-gradient(135deg, #1e293b, #334155);
-            color: #facc15;
-            padding: 5px 16px;
+            background: linear-gradient(135deg, var(--pink), var(--lilac));
+            color: #fff;
+            padding: 6px 18px;
             border-radius: 30px;
             font-size: 18px;
-            font-weight: 600;
-            border: 1px solid rgba(250, 204, 21, 0.3);
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.15s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            letter-spacing: 0.3px;
+            box-shadow: 0 4px 12px rgba(179, 157, 255, 0.45);
+            animation: bubble 0.25s ease;
         }
         .answer-zone span:hover {
-            background: linear-gradient(135deg, #facc15, #f59e0b);
-            color: #0f172a;
-            transform: scale(1.05);
-            border-color: #facc15;
-            box-shadow: 0 4px 20px rgba(250, 204, 21, 0.35);
+            transform: scale(1.08) rotate(-2deg);
+            background: linear-gradient(135deg, var(--pink-deep), var(--lilac-deep));
+        }
+        @keyframes bubble {
+            from { transform: scale(0.6); opacity: 0; }
+            to   { transform: scale(1);   opacity: 1; }
         }
 
+        /* ---------- банк слов ---------- */
         .word-bank {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            padding: 12px 14px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 16px;
-            min-height: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            gap: 10px;
+            padding: 14px;
+            background: var(--accent-soft);
+            border-radius: 20px;
+            min-height: 52px;
         }
         .word-btn {
-            background: linear-gradient(135deg, #1e293b, #2d3a4f);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: #ffffff;
+            border: 2px solid var(--accent);
             padding: 7px 18px;
             border-radius: 40px;
             font-size: 17px;
-            font-weight: 600;
-            color: #e2e8f0;
+            font-weight: 700;
+            color: var(--text);
             cursor: pointer;
             transition: all 0.15s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            letter-spacing: 0.2px;
+            box-shadow: 0 4px 0 var(--accent);
         }
         .word-btn:hover:not(:disabled) {
-            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            background: var(--accent);
             color: #ffffff;
-            transform: scale(1.05) translateY(-2px);
-            border-color: #3b82f6;
-            box-shadow: 0 6px 25px rgba(59, 130, 246, 0.4);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 7px 0 rgba(0, 0, 0, 0.1);
+        }
+        .word-btn:active:not(:disabled) {
+            transform: translateY(2px);
+            box-shadow: 0 1px 0 var(--accent);
         }
         .word-btn:disabled {
-            opacity: 0.25;
+            opacity: 0.3;
             cursor: not-allowed;
+            box-shadow: none;
             transform: scale(0.92);
-            filter: grayscale(0.6);
+            background: transparent;
         }
 
+        /* ---------- статус ---------- */
         .status-line {
-            margin-top: 10px;
-            font-weight: 600;
+            margin-top: 12px;
+            font-weight: 700;
             font-size: 15px;
         }
+        .status-line:empty { margin-top: 0; }
         .result-badge {
             display: inline-block;
-            padding: 4px 18px;
+            padding: 7px 18px;
             border-radius: 40px;
-            font-weight: 700;
-            font-size: 14px;
-            letter-spacing: 0.2px;
+            font-weight: 800;
+            font-size: 14.5px;
+            animation: bubble 0.3s ease;
         }
         .result-correct {
-            background: rgba(16, 185, 129, 0.2);
-            color: #34d399;
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            box-shadow: 0 0 20px rgba(16, 185, 129, 0.1);
+            background: #d9fbee;
+            color: #139b72;
+            border: 2px solid var(--mint);
         }
         .result-wrong {
-            background: rgba(239, 68, 68, 0.2);
-            color: #f87171;
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            box-shadow: 0 0 20px rgba(239, 68, 68, 0.1);
+            background: #ffe3ec;
+            color: #d6336c;
+            border: 2px solid #ff9bbd;
         }
 
+        /* ---------- нижняя панель ---------- */
         .flex-row {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
-            gap: 14px;
-            margin-top: 28px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            gap: 16px;
+            margin-top: 30px;
+            padding-top: 24px;
+            border-top: 3px dotted rgba(255, 143, 199, 0.5);
         }
         .btn-group {
             display: flex;
-            gap: 12px;
+            gap: 14px;
             flex-wrap: wrap;
         }
         .btn {
-            padding: 10px 28px;
+            padding: 12px 28px;
             border: none;
             border-radius: 40px;
-            font-weight: 700;
-            font-size: 15px;
+            font-weight: 800;
+            font-size: 16px;
             cursor: pointer;
             transition: all 0.2s ease;
-            letter-spacing: 0.3px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            color: #fff;
         }
         .btn-warning {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: #0f172a;
-        }
-        .btn-warning:hover {
-            transform: scale(1.04) translateY(-2px);
-            box-shadow: 0 8px 30px rgba(245, 158, 11, 0.4);
+            background: linear-gradient(135deg, var(--peach), var(--pink-deep));
+            box-shadow: 0 6px 0 #e0709a, 0 10px 20px rgba(255, 95, 168, 0.35);
         }
         .btn-success {
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: #ffffff;
+            background: linear-gradient(135deg, var(--mint), var(--mint-deep));
+            box-shadow: 0 6px 0 #1fa482, 0 10px 20px rgba(52, 201, 160, 0.35);
         }
-        .btn-success:hover {
-            transform: scale(1.04) translateY(-2px);
-            box-shadow: 0 8px 30px rgba(16, 185, 129, 0.4);
-        }
+        .btn:hover { transform: translateY(-3px); }
+        .btn:active { transform: translateY(4px); box-shadow: 0 2px 0 rgba(0,0,0,0.15); }
+
         .stat {
-            background: rgba(255, 255, 255, 0.06);
-            padding: 8px 24px;
+            background: linear-gradient(135deg, #fff3b8, #ffd6ec);
+            padding: 10px 26px;
             border-radius: 40px;
-            font-weight: 700;
-            font-size: 18px;
-            color: #facc15;
-            border: 1px solid rgba(250, 204, 21, 0.15);
-            backdrop-filter: blur(10px);
-            letter-spacing: 0.5px;
+            font-weight: 800;
+            font-size: 20px;
+            color: var(--text);
+            border: 3px solid #fff;
+            box-shadow: 0 6px 18px rgba(255, 170, 210, 0.45);
         }
-        .stat span {
-            color: #ffffff;
+        .stat span { color: var(--pink-deep); font-size: 24px; }
+
+        .final-msg {
+            text-align: center;
+            margin-top: 22px;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--lilac-deep);
+            min-height: 28px;
+        }
+        .final-msg.show { animation: bubble 0.4s ease; }
+
+        /* ---------- конфетти ---------- */
+        .confetti {
+            position: fixed;
+            top: -40px;
+            font-size: 26px;
+            pointer-events: none;
+            z-index: 50;
+            animation: fall linear forwards;
+        }
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(540deg); opacity: 0.9; }
         }
 
+        /* ---------- мобильная версия ---------- */
         @media (max-width: 600px) {
+            body { padding: 20px 10px 40px; }
+            .container { padding: 22px 14px 26px; border-radius: 30px; }
+            h2 { font-size: 30px; }
+            .sentence-block { padding: 16px 14px 18px; border-radius: 22px; }
             .russian { font-size: 17px; }
             .word-btn { font-size: 15px; padding: 6px 14px; }
-            .answer-zone span { font-size: 16px; padding: 4px 12px; }
-            h2 { font-size: 22px; }
-            .btn { padding: 8px 18px; font-size: 13px; }
+            .answer-zone span { font-size: 16px; padding: 5px 14px; }
+            .btn { padding: 10px 20px; font-size: 14px; }
+            .flex-row { justify-content: center; }
+            .floaty { font-size: 22px !important; }
         }
-
-        @keyframes fadeSlideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .sentence-block {
-            animation: fadeSlideUp 0.4s ease forwards;
-        }
-        .sentence-block:nth-child(2) { animation-delay: 0.05s; }
-        .sentence-block:nth-child(3) { animation-delay: 0.10s; }
-        .sentence-block:nth-child(4) { animation-delay: 0.15s; }
-        .sentence-block:nth-child(5) { animation-delay: 0.20s; }
-        .sentence-block:nth-child(6) { animation-delay: 0.25s; }
-        .sentence-block:nth-child(7) { animation-delay: 0.30s; }
-        .sentence-block:nth-child(8) { animation-delay: 0.35s; }
-        .sentence-block:nth-child(9) { animation-delay: 0.40s; }
-        .sentence-block:nth-child(10) { animation-delay: 0.45s; }
     </style>
 </head>
 <body>
 
+<span class="floaty">🌸</span>
+<span class="floaty">💖</span>
+<span class="floaty">🦋</span>
+<span class="floaty">⭐</span>
+<span class="floaty">☁️</span>
+<span class="floaty">🌷</span>
+<span class="floaty">✨</span>
+
 <div class="container">
     <div class="header">
-        <h2>
-            🧩 Собери предложение
-            <span>Possessive Case</span>
-        </h2>
+        <h2>✨ Собери предложение ✨</h2>
+        <div class="badge">💗 Possessive Case</div>
     </div>
+
     <div class="task-desc">
-        <strong>📌 Как играть:</strong> Нажимай на слова в правильном порядке, чтобы получился перевод русского предложения.  
-        Если ошибся — нажми на слово в <strong>жёлтой</strong> строке, чтобы убрать его.
+        <strong>📌 Как играть:</strong> Нажимай на слова в правильном порядке, чтобы получился перевод русского предложения.
+        Если ошиблась — нажми на слово в <strong>розовой</strong> строке, и оно вернётся обратно 💕
     </div>
 
     <div id="builderContainer"></div>
@@ -324,6 +419,8 @@
         </div>
         <div id="builderScore" class="stat">⭐ <span id="scoreDisplay">0</span> / 10</div>
     </div>
+
+    <div id="finalMsg" class="final-msg"></div>
 </div>
 
 <script>
@@ -368,7 +465,7 @@
     }
 
     // --------------------------------------------------------------
-    // ОТРИСОВКА С СОХРАНЕНИЕМ ССЫЛОК НА DOM-ЭЛЕМЕНТЫ
+    // ОТРИСОВКА
     // --------------------------------------------------------------
     function renderBuilder() {
         const container = document.getElementById('builderContainer');
@@ -378,25 +475,21 @@
             block.className = 'sentence-block';
             block.dataset.index = idx;
 
-            // Русский текст
             const ruDiv = document.createElement('div');
             ruDiv.className = 'russian';
-            ruDiv.innerHTML = `<span class="num">${idx+1}.</span> ${item.ru}`;
+            ruDiv.innerHTML = `<span class="num">${idx + 1}</span><span>${item.ru}</span>`;
             block.appendChild(ruDiv);
 
-            // Зона ответа
             const answerZone = document.createElement('div');
             answerZone.className = 'answer-zone';
             answerZone.id = `answerZone_${idx}`;
             block.appendChild(answerZone);
 
-            // Банк слов
             const wordBank = document.createElement('div');
             wordBank.className = 'word-bank';
             wordBank.id = `wordBank_${idx}`;
             block.appendChild(wordBank);
 
-            // Статус
             const statusDiv = document.createElement('div');
             statusDiv.className = 'status-line';
             statusDiv.id = `status_${idx}`;
@@ -404,19 +497,17 @@
 
             container.appendChild(block);
 
-            // Заполняем данными
             updateBlock(idx);
         });
         updateScoreDisplay();
     }
 
     // --------------------------------------------------------------
-    // ОБНОВЛЕНИЕ ОДНОГО БЛОКА (БЕЗ ПЕРЕРИСОВКИ ВСЕГО DOM)
+    // ОБНОВЛЕНИЕ ОДНОГО БЛОКА
     // --------------------------------------------------------------
     function updateBlock(idx) {
         const item = builderState[idx];
 
-        // Обновляем answer-zone
         const answerZone = document.getElementById(`answerZone_${idx}`);
         if (answerZone) {
             answerZone.innerHTML = '';
@@ -433,7 +524,6 @@
             });
         }
 
-        // Обновляем word-bank
         const wordBank = document.getElementById(`wordBank_${idx}`);
         if (wordBank) {
             wordBank.innerHTML = '';
@@ -461,7 +551,6 @@
         if (item.userOrderIndices.includes(wordIndex)) return;
         item.userOrderIndices.push(wordIndex);
 
-        // Очищаем статус, если был проверен
         const statusDiv = document.getElementById(`status_${idx}`);
         if (statusDiv) statusDiv.innerHTML = '';
 
@@ -475,7 +564,6 @@
         if (position >= 0 && position < item.userOrderIndices.length) {
             item.userOrderIndices.splice(position, 1);
 
-            // Очищаем статус, если был проверен
             const statusDiv = document.getElementById(`status_${idx}`);
             if (statusDiv) statusDiv.innerHTML = '';
 
@@ -499,13 +587,43 @@
             const statusDiv = document.getElementById(`status_${idx}`);
             if (statusDiv) {
                 if (isCorrect) {
-                    statusDiv.innerHTML = `<span class="result-badge result-correct">✅ Верно!</span>`;
+                    statusDiv.innerHTML = `<span class="result-badge result-correct">✅ Верно! Умничка 💖</span>`;
                 } else {
-                    statusDiv.innerHTML = `<span class="result-badge result-wrong">❌ Неверно. Правильно: «${item.en}»</span>`;
+                    statusDiv.innerHTML = `<span class="result-badge result-wrong">💭 Почти! Правильно: «${item.en}»</span>`;
                 }
             }
         });
         document.getElementById('scoreDisplay').textContent = correctCount;
+        showFinalMessage(correctCount);
+    }
+
+    function showFinalMessage(score) {
+        const box = document.getElementById('finalMsg');
+        let text;
+        if (score === 10) text = '🎉 Идеально! Ты просто супер! 🎉';
+        else if (score >= 8) text = '🌟 Отличный результат! Ещё чуть-чуть до идеала!';
+        else if (score >= 5) text = '💪 Хорошо! Попробуй исправить ошибки — у тебя получится!';
+        else text = '🌷 Не расстраивайся, всё впереди! Попробуй ещё разок 💕';
+        box.textContent = text;
+        box.classList.remove('show');
+        void box.offsetWidth;
+        box.classList.add('show');
+        if (score === 10) launchConfetti();
+    }
+
+    function launchConfetti() {
+        const pieces = ['💖', '✨', '🌸', '⭐', '🎀', '🦋', '💜', '🌷'];
+        for (let i = 0; i < 40; i++) {
+            const el = document.createElement('div');
+            el.className = 'confetti';
+            el.textContent = pieces[Math.floor(Math.random() * pieces.length)];
+            el.style.left = Math.random() * 100 + 'vw';
+            el.style.fontSize = (18 + Math.random() * 22) + 'px';
+            el.style.animationDuration = (2.5 + Math.random() * 2.5) + 's';
+            el.style.animationDelay = (Math.random() * 0.8) + 's';
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 6500);
+        }
     }
 
     // --------------------------------------------------------------
@@ -514,10 +632,11 @@
     function resetBuilder() {
         initBuilder();
         document.getElementById('scoreDisplay').textContent = '0';
+        document.getElementById('finalMsg').textContent = '';
     }
 
     function updateScoreDisplay() {
-        // не обновляем счёт автоматически — только при проверке
+        // счёт обновляется только при проверке
     }
 
     // --------------------------------------------------------------
